@@ -19,3 +19,9 @@ class LinearRegression:
 
     def fit(self, X: np.ndarray, y: np.ndarray) -> None:
         pass
+
+    def _gradients(self, X: np.ndarray, y_true: np.ndarray, y_pred: np.ndarray) -> tuple[float, float]:
+        n = len(y_true)
+        dk = (2/n) * sum(X * (y_pred - y_true))
+        db = (2/n) * sum(y_pred - y_true)
+        return dk, db
