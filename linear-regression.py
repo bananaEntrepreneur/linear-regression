@@ -11,7 +11,7 @@ class LinearRegression:
         self.loss_history: list[float] = []
 
     def predict(self, X: np.ndarray) -> np.ndarray:
-        pass
+        return self.k * X + self.b
 
     def _mse(self, y_true: np.ndarray, y_pred: np.ndarray) -> float:
         return (1/self.n) * sum((y_true - y_pred) ** 2)
