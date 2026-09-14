@@ -14,7 +14,8 @@ class LinearRegression:
         return self.k * X + self.b
 
     def _mse(self, y_true: np.ndarray, y_pred: np.ndarray) -> float:
-        return (1/self.n) * sum((y_true - y_pred) ** 2)
+        n = len(y_true)
+        return (1/n) * sum((y_true - y_pred) ** 2)
 
     def fit(self, X: np.ndarray, y: np.ndarray) -> None:
         pass
