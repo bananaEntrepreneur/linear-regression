@@ -61,3 +61,12 @@ class LinearRegression:
 
             self.k -= self.lr * dk
             self.b -= self.lr * db
+
+    def save(self, path: str) -> None:
+        with open(path, "w") as f:
+            f.write(f"{self.k}\n{self.b}\n")
+
+    def load(self, path: str) -> None:
+        with open(path) as f:
+            self.k = float(f.readline())
+            self.b = float(f.readline())
