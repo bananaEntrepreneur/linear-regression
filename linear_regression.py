@@ -55,8 +55,7 @@ class LinearRegression:
             self.loss_history.append(self.mse(y, X @ self.w + self.b))
 
     def save(self, path: str) -> None:
-        with open(path, "w") as f:
-            f.write(f"{self.k}\n{self.b}\n")
+        np.savez(path, w=self.w, b=self.b)
 
     def load(self, path: str) -> None:
         with open(path) as f:
