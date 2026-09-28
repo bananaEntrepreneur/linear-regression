@@ -1,14 +1,18 @@
-class LinearRegression:
-    """y = k * x + b"""
+import numpy as np
 
-    def __init__(self, learning_rate: float = 0.1, n_iters: int = 50_000) -> None:
+
+class LinearRegression:
+    """y = X @ w + b"""
+
+    def __init__(
+        self, learning_rate: float = 0.1, n_epochs: int = 300, batch_size: int = 16
+    ) -> None:
         self.lr: float = learning_rate
-        self.n_iters: int = n_iters
-        self.k: float = 0.0
+        self.n_epochs: int = n_epochs
+        self.batch_size: int = batch_size
+        self.w: np.ndarray | None = None
         self.b: float = 0.0
         self.loss_history: list[float] = []
-        self.k_history: list[float] = []
-        self.b_history: list[float] = []
 
     def predict(self, x: float) -> float:
         return self.k * x + self.b
