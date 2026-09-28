@@ -14,16 +14,9 @@ class LinearRegression:
         self.b: float = 0.0
         self.loss_history: list[float] = []
 
-    def predict(self, x: float) -> float:
-        return self.k * x + self.b
-
     @staticmethod
-    def mse(y_true: list[float], y_pred: list[float]) -> float:
-        n = len(y_true)
-        total_error = 0.0
-        for i in range(n):
-            total_error += (y_true[i] - y_pred[i]) ** 2
-        return total_error / n
+    def mse(y_true: np.ndarray, y_pred: np.ndarray) -> float:
+        return float(np.mean((y_true - y_pred) ** 2))
 
     @staticmethod
     def mae(y_true: list[float], y_pred: list[float]) -> float:
