@@ -78,14 +78,10 @@ def main() -> None:
 
     plot_loss_surface(model, x_train, y_train)
 
-    y_pred_val = []
-    for xi in x_val:
-        y_pred_val.append(model.predict(xi))
+    y_pred_val = model.predict_all(x_val)
 
     line_x = [min(x_val), max(x_val)]
-    line_y = []
-    for xi in line_x:
-        line_y.append(model.predict(xi))
+    line_y = model.predict_all(line_x)
 
     plt.figure()
     plt.scatter(x_val, y_val, label="данные")

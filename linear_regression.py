@@ -29,7 +29,7 @@ class LinearRegression:
             total_error += abs(y_true[i] - y_pred[i])
         return total_error / n
 
-    def _predict_all(self, X: list[float]) -> list[float]:
+    def predict_all(self, X: list[float]) -> list[float]:
         y_pred = []
         for i in range(len(X)):
             y_pred.append(self.predict(X[i]))
@@ -51,7 +51,7 @@ class LinearRegression:
 
     def fit(self, X: list[float], y: list[float]) -> None:
         for _ in range(self.n_iters):
-            y_pred = self._predict_all(X)
+            y_pred = self.predict_all(X)
 
             self.loss_history.append(self.mse(y, y_pred))
             self.k_history.append(self.k)
