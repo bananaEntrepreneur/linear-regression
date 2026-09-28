@@ -32,7 +32,7 @@ class LinearRegression:
     def _predict_all(self, X: list[float]) -> list[float]:
         y_pred = []
         for i in range(len(X)):
-            y_pred.append(self.k * X[i] + self.b)
+            y_pred.append(self.predict(X[i]))
         return y_pred
 
     def _gradients(
