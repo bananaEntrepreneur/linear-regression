@@ -22,38 +22,37 @@ class LinearRegression:
     def mae(y_true: np.ndarray, y_pred: np.ndarray) -> float:
         return float(np.mean(np.abs(y_true - y_pred)))
 
-    def predict_all(self, X: list[float]) -> list[float]:
-        y_pred = []
-        for i in range(len(X)):
-            y_pred.append(self.predict(X[i]))
-        return y_pred
+    def fit(self, X: np.ndarray, y: np.ndarray) -> None:
+        X = np.asarray(X, dtype=float)
+        y = np.asarray(y, dtype=float)
+        n_samples, n_features = X.shape
 
-    def _gradients(
-        self, X: list[float], y_true: list[float], y_pred: list[float]
-    ) -> tuple[float, float]:
-        n = len(X)
-        dk_sum = 0.0
-        db_sum = 0.0
-        for i in range(n):
-            error = y_pred[i] - y_true[i]
-            dk_sum += X[i] * error
-            db_sum += error
-        dk = (2 / n) * dk_sum
-        db = (2 / n) * db_sum
-        return dk, db
+        self.w = np.zeros(n_features)
+        self.b = 0.0
+        self.loss_history = []
 
-    def fit(self, X: list[float], y: list[float]) -> None:
-        for _ in range(self.n_iters):
-            y_pred = self.predict_all(X)
+        rng = np.random.default_rng()
 
-            self.loss_history.append(self.mse(y, y_pred))
-            self.k_history.append(self.k)
-            self.b_history.append(self.b)
+        for _ in range(self.n_epochs):
+            idx = rng.permutation(n_samples)
+            X_shuffled = X[idx]
+            y_shuffled = y[idx]
 
-            dk, db = self._gradients(X, y, y_pred)
+            for start in range(0, n_samples, self.batch_size):
+                X_batch = X_shuffled[start: start + self.batch_size]
+                y_batch = y_shuffled[start: start + self.batch_size]
+                m = len(y_batch)
 
-            self.k -= self.lr * dk
-            self.b -= self.lr * db
+                y_pred = X_batch @ self.w + self.b
+                error = y_pred - y_batch
+
+                dw = (2 / m) * (X_batch.T @ error)
+                db = (2 / m) * np.sum(error)
+
+                self.w -= self.lr * dw
+                self.b -= self.lr * db
+
+            self.loss_history.append(self.mse(y, X @ self.w + self.b))
 
     def save(self, path: str) -> None:
         with open(path, "w") as f:
