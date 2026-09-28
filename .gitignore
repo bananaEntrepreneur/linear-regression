@@ -4,4 +4,5 @@ __pycache__/
 *.pyc
 result.png
 weights.txt
+weights_multi.npz
 data/*

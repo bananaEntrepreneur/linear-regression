@@ -39,8 +39,8 @@ class LinearRegression:
             y_shuffled = y[idx]
 
             for start in range(0, n_samples, self.batch_size):
-                X_batch = X_shuffled[start: start + self.batch_size]
-                y_batch = y_shuffled[start: start + self.batch_size]
+                X_batch = X_shuffled[start : start + self.batch_size]
+                y_batch = y_shuffled[start : start + self.batch_size]
                 m = len(y_batch)
 
                 y_pred = X_batch @ self.w + self.b
@@ -58,6 +58,6 @@ class LinearRegression:
         np.savez(path, w=self.w, b=self.b)
 
     def load(self, path: str) -> None:
-        with open(path) as f:
-            self.k = float(f.readline())
-            self.b = float(f.readline())
+        data = np.load(path)
+        self.w = data["w"]
+        self.b = float(data["b"])
